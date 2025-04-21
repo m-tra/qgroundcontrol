@@ -197,6 +197,11 @@ Item {
         id: gripperOptions
     }
 
+    JoystickInput {
+        id: testJoystickInput
+        anchors.centerIn: parent
+    }
+
     VehicleWarnings {
         anchors.centerIn:   parent
         z:                  QGroundControl.zOrderTopMost
