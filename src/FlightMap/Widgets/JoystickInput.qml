@@ -1,5 +1,4 @@
 import QtQuick
-
 import QGroundControl
 import QGroundControl.Controls
 import QGroundControl.ScreenTools
@@ -7,23 +6,51 @@ import QGroundControl.FactSystem
 import QGroundControl.Palette
 
 Rectangle {
-    width: ScreenTools.defaultFontPixelHeight * 10
-    height: _outerRadius * 4
-    radius: _outerRadius
+    id: joystickRect
+    width: ScreenTools.defaultFontPixelHeight * 16
+    height: width / 3
+    radius: width / 2
     color: QGroundControl.globalPalette.window
 
-    property real extraInset: 0
-    property real extraValuesWidth: _outerRadius
+    // property to store updated joystick values
+    property var joystickData: ({ roll: 0, pitch: 0, yaw: 0, thrust: 0})
 
-    property real _outerMargin: (width * 0.05) / 2
-    property real _outerRadius: width / 2
-    property real _innerRadius: _outerRadius - _outerMargin
-
-    // Print a test string to ensure the file is visible
-    Text {
+    Column {
         anchors.centerIn: parent
-        text: "Test string"
-        font.pixelSize: ScreenTools.defaultFontPixelHeight
-        color: QGroundControl.globalPalette.text
+        spacing: ScreenTools.defaultFontPixelHeight / 4
+
+        Text {
+            id: labelRoll
+            text: "Roll: " + joystickData.roll.toFixed(2)
+            color: "white"
+        }
+        Text {
+            id: labelPitch
+            text: "Pitch: " + joystickData.pitch.toFixed(2)
+            color: "white"
+        }
+        Text {
+            id: labelYaw
+            text: "Yaw: " + joystickData.yaw.toFixed(2)
+            color: "white"
+        }
+        Text {
+            id: labelThrust
+            text: "Thrust: " + joystickData.thrust.toFixed(2)
+            color: "white"
+        }
+    }
+
+    Connections {
+        target: globals.activeVehicle
+
+        function onJoystickDataUpdated(roll, pitch, yaw, thrust) {
+            joystickRect.joystickData = { 
+                roll: roll, 
+                pitch: pitch, 
+                yaw: yaw, 
+                thrust: thrust 
+            };
+        }
     }
 }

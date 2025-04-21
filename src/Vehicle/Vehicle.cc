@@ -3868,6 +3868,9 @@ void Vehicle::sendJoystickDataThreadSafe(float roll, float pitch, float yaw, flo
     float newYawCommand    =    yaw * axesScaling;
     float newThrustCommand =    thrust * axesScaling;
 
+    qDebug() << "Sending joystick data:" << newRollCommand << newPitchCommand << newYawCommand << newThrustCommand;
+    emit joystickDataUpdated(newRollCommand, newPitchCommand, newYawCommand, newThrustCommand);
+
     mavlink_msg_manual_control_pack_chan(
         static_cast<uint8_t>(MAVLinkProtocol::instance()->getSystemId()),
         static_cast<uint8_t>(MAVLinkProtocol::getComponentId()),

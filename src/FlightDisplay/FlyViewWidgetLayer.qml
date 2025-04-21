@@ -199,7 +199,7 @@ Item {
 
     JoystickInput {
         id: testJoystickInput
-        anchors.centerIn: parent
+        anchors.bottom:   parent.bottom
     }
 
     VehicleWarnings {
